@@ -13,22 +13,20 @@ class ContextProvider extends Component {
     };
   
     getCalculate = (amount,rate,year) => {
-      let emi=((amount*(rate/12))/100)+(amount/(year*12));
+      let emi = [amount*(rate/(100*12))]*[(Math.pow((1+(rate/(100*12))),(year*12)))/(Math.pow((1+(rate/(100*12))),(year*12))-1)]
       let total_pay=(emi*12*year)
-      if(amount==0){
-        this.setState({loan_amount_err:"Please enter amount",rate_err:"",
-        year_err:""})
-      }else if(rate==0){
-        this.setState({loan_amount_err:"",rate_err:"Please enter valid rate",year_err:""})
+      if(amount===0){
+        this.setState({loan_amount_err:"Please enter amount", rate_err:"", year_err:""})
+      }else if(rate===0){
+        this.setState({loan_amount_err:"", rate_err:"Please enter valid rate", year_err:""})
       } else if(year<1 || year>21){
-        this.setState({loan_amount_err:"",
-        rate_err:"",year_err:"Please enter valid year"})
+        this.setState({loan_amount_err:"", rate_err:"", year_err:"Please enter valid year"})
       }else{
         this.setState({
-          loan_amount:amount,
+          loan_amount:amount.toFixed(2),
           interest:rate,
-          total_pay:total_pay,
-          emi:emi,
+          total_pay:total_pay.toFixed(2),
+          emi:emi.toFixed(2),
           loan_amount_err:"",
           rate_err:"",
           year_err:""
@@ -36,11 +34,9 @@ class ContextProvider extends Component {
       }
     };
   
-      render() {
+    render() {
       return (
-        <Provider
-          value={{ getCalculate: this.getCalculate, loan_amount: this.state.loan_amount, interest:this.state.interest, total_pay:this.state.total_pay, emi:this.state.emi, loan_amount_err:this.state.loan_amount_err,rate_err:this.state.rate_err,year_err:this.state.year_err }}
-        >
+        <Provider value={{ getCalculate: this.getCalculate, loan_amount: this.state.loan_amount, interest:this.state.interest, total_pay:this.state.total_pay, emi:this.state.emi, loan_amount_err:this.state.loan_amount_err,rate_err:this.state.rate_err,year_err:this.state.year_err }} >
           {this.props.children}
         </Provider>
       );

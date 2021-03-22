@@ -12,7 +12,7 @@ function MyForm(props) {
             <div className="form-group"><h5><label for="rate">Rate:</label></h5><input className="form-control" type="number" id="rate" placeholder="Please Enter Rate of Interest" /><label><h6>{context.rate_err}</h6></label></div>
             <div className="form-group"><h5><label for="year">Years:</label></h5><input className="form-control" type="number" id="year" placeholder="Please Enter Years" /><label><h6>{context.year_err}</h6></label></div>
             </form>
-            <button className="btn btn-primary" onClick={() => {context.getCalculate(parseInt($('#amount').val()),parseInt($('#rate').val()),parseInt($('#year').val()))}} >Calculate</button>
+            <button className="btn btn-primary" onClick={() => {context.getCalculate(parseFloat($('#amount').val()),parseFloat($('#rate').val()),parseInt($('#year').val()))}} >Calculate</button>
             <table className="table table-bordered"><tr><td>EMI : </td><td>₹{context.emi}/month</td></tr>
             <tr><td>Loan Amount : </td><td>₹{context.loan_amount}</td></tr>
             <tr><td>Interest : </td><td>{context.interest}%</td></tr>
